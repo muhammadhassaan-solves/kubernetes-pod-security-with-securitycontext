@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: netadmin-pod-root
+spec:
+  containers:
+  - name: tools
+    image: nicolaka/netshoot
+    command: ["/bin/sh"]
+    args: ["-c", "sleep 3600"]
+    securityContext:
+      runAsUser: 0
+      capabilities:
+        add: ["NET_ADMIN"]
+        drop: ["ALL"]
+    volumeMounts:
+    - name: tmp-volume
+      mountPath: /tmp
+  volumes:
+  - name: tmp-volume
+    emptyDir: {}
